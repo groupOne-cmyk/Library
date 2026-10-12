@@ -17,6 +17,15 @@
     "pageCount": 60,
     "ext": "webp",
     "pad": 4
+   },
+   {
+    "number": 2,
+    "title": "Chapter 2",
+    "key": "cmv5vjgix0",
+    "folder": "library/pages/1/cmv5vjgix0",
+    "pageCount": 2,
+    "ext": "webp",
+    "pad": 4
    }
   ]
  }
