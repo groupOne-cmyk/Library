@@ -39,5 +39,26 @@
     "textFile": "library/text/2/tmv3obelq2.txt"
    }
   ]
+ },
+ {
+  "id": 3,
+  "title": "Jujutsu Kaisen",
+  "author": "Gege Akutami",
+  "genre": "Action",
+  "type": "manga",
+  "year": 2018,
+  "copies": 1,
+  "desc": "",
+  "chapters": [
+   {
+    "number": 1,
+    "title": "Ryomen Sukuna",
+    "key": "cmv5urpww0",
+    "folder": "library/pages/3/cmv5urpww0",
+    "pageCount": 1,
+    "ext": "webp",
+    "pad": 4
+   }
+  ]
  }
 ]
