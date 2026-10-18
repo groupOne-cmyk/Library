@@ -1,5 +1,3 @@
-// File check page: opens every file of the site fresh and checks that it is the newest version.
-// It does not use app.js, so it still works when app.js is old or broken.
 const BUILD='8';
 const V='?v='+BUILD;
 const FILES=[
@@ -32,12 +30,10 @@ function addRow(file,text,ok){
     if(missing.length){addRow(file,'OLD VERSION: this file does not contain "'+missing[0]+'". Upload the newest copy.',false);problems++}
     else addRow(file,'OK',true);
   }
-  // files that were uploaded to the wrong place (the top level instead of the js or css folder)
   for(const [file] of FILES.filter(f=>/^(js|css)\//.test(f[0]))){
     const name=file.split('/')[1];
     try{const r=await fresh(name);if(r.ok){addRow(name,'WRONG PLACE: this file is also at the top level of the site. It belongs only inside the '+file.split('/')[0]+' folder, so delete the top-level copy.',false);problems++}}catch{}
   }
-  // the books themselves: does the first file of each book exist?
   try{
     const list=await (await fresh('library/books.json')).json();let checked=0,missing=0;
     for(const b of list.slice(0,25)){
