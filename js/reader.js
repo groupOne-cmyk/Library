@@ -1,9 +1,8 @@
-// Reader: reader.html?id=1&ch=2  (text books, manga and manhwa as a vertical scroll, comics page by page)
 ready.then(async()=>{
 const params=new URLSearchParams(location.search),book=await findBookOrReload(params.get('id'));
 if(!book){$('main').innerHTML=notFoundHTML(params.get('id'))}
 else (async()=>{
-  if(!canRead(book,me())){     // every copy is borrowed by someone else
+  if(!canRead(book,me())){
     $('main').innerHTML=`<p>This book cannot be read right now because all copies are borrowed. You can read it once one is returned.</p><p><a href="book-details.html?id=${book.id}">Back to the book</a></p>`;
     return;
   }
@@ -16,7 +15,7 @@ else (async()=>{
   const loanDue=u?.due?.[book.id];
   if(loanDue)$('#reader-title').insertAdjacentHTML('afterend',`<span class="loan-timer" data-due="${loanDue}" data-prefix="Return within ">Return within ${fmtLeft(loanDue)}</span>`);
 
-  if(chs.length>1){   // chapter navigation
+  if(chs.length>1){ 
     $('#chapter-nav').hidden=false;
     $('#chapter-select').innerHTML=chs.map(c=>`<option value="${c.number}"${c===ch?' selected':''}>Chapter ${c.number}: ${esc(c.title)}</option>`).join('');
     $('#chapter-select').onchange=e=>goCh(e.target.value);
