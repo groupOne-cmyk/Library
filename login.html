@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in | Online Library</title>
+  <link rel="stylesheet" href="css/style.css?v=8">
+</head>
+<body data-page="login">
+
+  <header class="site-header">
+    <a class="site-header__brand" href="index.html">Online Library</a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="catalog.html">Catalog</a>
+      <a href="my-library.html" data-auth="user" hidden>My Library</a>
+      <a href="admin.html" data-auth="admin" hidden>Admin</a>
+      <a href="login.html" aria-current="page" id="auth-btn" class="btn">Log in</a>
+    </nav>
+  </header>
+
+  <main class="page page--login">
+    <section class="auth-card">
+      <form id="login-form" class="form" novalidate>
+        <h1>Log in</h1>
+        <label>Username<input id="login-user" name="username" autocomplete="username" required minlength="3"></label>
+        <label>Password<input id="login-pass" name="password" type="password" autocomplete="current-password" required minlength="5"></label>
+        <p class="form-error" aria-live="polite"></p>
+        <button type="submit" class="btn">Log in</button>
+        <p class="muted">No account? <a href="#" id="show-register">Register</a></p>
+      </form>
+
+      <form id="register-form" class="form" novalidate hidden>
+        <h1>Register</h1>
+        <label>Username<input id="reg-user" name="username" autocomplete="username" required minlength="3"></label>
+        <label>Password<input id="reg-pass" name="password" type="password" autocomplete="new-password" required minlength="5"></label>
+        <label>Confirm password<input id="reg-pass2" name="password2" type="password" autocomplete="new-password" required></label>
+        <p class="form-error" aria-live="polite"></p>
+        <button type="submit" class="btn">Create account</button>
+        <p class="muted">Have an account? <a href="#" id="show-login">Log in</a></p>
+      </form>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <footer class="site-footer">
+    <p>Online Library &middot; BSIT Group 1 &middot; ICCT Colleges Foundation Inc. &middot; School project</p>
+  </footer>
+
+  <script src="js/app.js?v=8"></script>
+  <script src="js/login.js?v=8"></script>
+</body>
+</html>

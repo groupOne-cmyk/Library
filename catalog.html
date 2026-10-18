@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catalog | Online Library</title>
+  <link rel="stylesheet" href="css/style.css?v=8">
+</head>
+<body data-page="catalog">
+
+  <header class="site-header">
+    <a class="site-header__brand" href="index.html">Online Library</a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="catalog.html" aria-current="page">Catalog</a>
+      <a href="my-library.html" data-auth="user" hidden>My Library</a>
+      <a href="admin.html" data-auth="admin" hidden>Admin</a>
+      <a href="login.html" id="auth-btn" class="btn">Log in</a>
+    </nav>
+  </header>
+
+  <main class="page page--catalog">
+    <h1>Catalog</h1>
+    <form id="filter-form" class="filters" role="search">
+      <label>Search<input id="search-input" name="q" type="search" placeholder="Title, author or genre"></label>
+      <label>Genre<select id="genre-select" name="genre"><option value="">All genres</option></select></label>
+      <label>Format
+        <select id="type-select" name="type">
+          <option value="">All formats</option>
+          <option value="text">Books (text)</option>
+          <option value="manga">Manga</option>
+          <option value="manhwa">Manhwa</option>
+          <option value="comic">Comics</option>
+        </select>
+      </label>
+      <label>Availability
+        <select id="avail-select" name="avail">
+          <option value="">Any availability</option>
+          <option value="available">Available</option>
+          <option value="checked-out">Checked out</option>
+        </select>
+      </label>
+      <button type="reset" class="btn btn--ghost">Clear filters</button>
+    </form>
+
+    <p id="result-count" class="muted" aria-live="polite">0 of 0 titles</p>
+    <div id="catalog-grid" class="book-grid">
+    </div>
+    <p id="empty-state" class="empty-state" hidden>No matches. Try a different keyword or clear a filter.</p>
+
+    <dialog id="book-modal" class="modal" aria-labelledby="modal-title">
+      <article class="book-details" data-book-id="">
+        <div class="book-details__cover" aria-hidden="true" data-field="cover"></div>
+        <div class="book-details__info">
+          <h2 id="modal-title" data-field="title">Book title</h2>
+          <p class="muted"><span data-field="author">Author</span> &middot; <span data-field="genre">Genre</span> &middot; <span data-field="year">Year</span> &middot; <span data-field="type">Format</span></p>
+          <p data-field="description">Short description.</p>
+          <p class="status" data-field="availability">Available (2 of 2 copies)</p>
+          <p class="loan-timer" data-field="loan" hidden></p>
+        <section id="chapter-section" class="chapters" hidden>
+          <h3>Chapters</h3>
+          <ol id="chapter-list" class="chapter-list"></ol>
+        </section>
+        <div class="actions">
+            <a id="btn-read" class="btn" href="reader.html">Read online</a>
+            <button id="btn-list" type="button" class="btn btn--ghost">Add to reading list</button>
+            <button id="btn-borrow" type="button" class="btn btn--ghost">Borrow</button>
+            <button id="btn-return" type="button" class="btn btn--ghost" hidden>Return book</button>
+            <button id="btn-wait" type="button" class="btn btn--ghost" hidden>Join the waitlist</button>
+            <button id="btn-unwait" type="button" class="btn btn--ghost" hidden>Leave waitlist</button>
+            <button id="btn-close" type="button" class="btn btn--ghost">Close</button>
+          </div>
+        </div>
+      </article>
+    </dialog>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <footer class="site-footer">
+    <p>Online Library &middot; BSIT Group 1 &middot; ICCT Colleges Foundation Inc. &middot; School project</p>
+  </footer>
+
+  <script src="js/app.js?v=8"></script>
+  <script src="js/catalog.js?v=8"></script>
+</body>
+</html>
