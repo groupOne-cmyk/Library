@@ -1,12 +1,11 @@
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-
-const softBreak=s=>String(s??'').replace(/(\S{30})(?=\S)/gu,'$1\u200b');
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
 const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch{toast('Storage is full. Use fewer or smaller images.');return false}};
 function toast(t){const e=$('#toast');if(!e)return;e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2200)}
 const TYPES={text:'Book',manga:'Manga',manhwa:'Manhwa',comic:'Comic'};
 const PAGE=document.body.dataset.page;
+const softBreak=s=>String(s??'').replace(/(\S{30})(?=\S)/gu,'$1\u200b');
 
 const LOAN_MS=7*24*60*60*1000;
 
@@ -29,13 +28,11 @@ function returnBook(u,id,silent){
   if(next){next.waits=next.waits.filter(i=>i!==id);next.loans.push(id);next.due[id]=Date.now()+LOAN_MS}
   if(!silent)toast('Returned');
 }
-
 const canRead=(b,u)=>freeCopies(b)>0||!!u?.loans.includes(b.id);
 function fmtLeft(due){
   const s=Math.max(0,Math.floor((due-Date.now())/1000));
   return `${Math.floor(s/86400)}d ${Math.floor(s%86400/3600)}h ${Math.floor(s%3600/60)}m ${s%60}s`;
 }
-
 function expireLoans(){
   let n=0;
   users.forEach(u=>u.loans.filter(id=>u.due[id]<=Date.now()).forEach(id=>{returnBook(u,id,true);n++}));
@@ -48,7 +45,7 @@ if((PAGE==='my-library'&&!me())||(PAGE==='admin'&&me()?.role!=='admin'))location
   const u=me(),btn=$('#auth-btn');
   $$('[data-auth="user"]').forEach(a=>a.hidden=!u);
   $$('[data-auth="admin"]').forEach(a=>a.hidden=u?.role!=='admin');
-  if(u){btn.textContent=`Log out (${u.username})`;btn.onclick=e=>{e.preventDefault();localStorage.removeItem('currentUser');location.href='index.html'}}
+  if(u&&btn){btn.textContent=`Log out (${u.username})`;btn.onclick=e=>{e.preventDefault();localStorage.removeItem('currentUser');location.href='index.html'}}
 })();
 
 function cardHTML(b){
@@ -79,7 +76,7 @@ function showDetails(root,b){
   rd.textContent=can?(prog?'Continue reading':'Read online'):'Not available to read';
   if(can){rd.href=`reader.html?id=${b.id}`+(prog?`&ch=${prog.ch}`:'');rd.removeAttribute('aria-disabled');rd.classList.remove('is-disabled')}
   else{rd.removeAttribute('href');rd.setAttribute('aria-disabled','true');rd.classList.add('is-disabled')}
-  if(loan){ 
+  if(loan){
     if(has){loan.hidden=false;loan.dataset.due=u.due[b.id];loan.dataset.prefix='You have ';loan.dataset.suffix=' left to return it.';loan.textContent=`You have ${fmtLeft(u.due[b.id])} left to return it.`}
     else if(!can){loan.hidden=false;delete loan.dataset.due;loan.textContent='All copies are borrowed, so this book cannot be read until one is returned.'}
     else{loan.hidden=true;delete loan.dataset.due}
@@ -107,13 +104,12 @@ function bindDetails(root){
   });
 }
 
-if(expireLoans()&&!users.find(u=>u.username===current)?.loans.length)toast('A borrowed book was returned because its week ended.');
+if(expireLoans()&&!me()?.loans.length)toast('A borrowed book was returned because its week ended.');
 setInterval(()=>{
   let over=false;
   $$('[data-due]').forEach(e=>{const due=+e.dataset.due;if(!due)return;if(due<=Date.now())over=true;else e.textContent=(e.dataset.prefix||'')+fmtLeft(due)+(e.dataset.suffix||'')});
   if(over){expireLoans();location.reload()}
 },1000);
-
 
 const loadPages=async(b,c)=>pagesOf(c);
 const loadText=async(b,c)=>{
@@ -126,7 +122,7 @@ const loadText=async(b,c)=>{
 };
 const mergeExtra=list=>[...list,...EXTRA.filter(x=>!list.some(b=>b.id===x.id)).map(x=>({...x,fromFile:true}))].sort((a,b)=>a.id-b.id);
 let libraryError=false;
-async function loadLibrary(fresh){ 
+async function loadLibrary(fresh){
   try{
     const r=await fetch('library/books.json'+(fresh?'?t='+Date.now():''),{cache:fresh?'reload':'no-cache'});
     if(!r.ok)throw 0;
@@ -137,7 +133,6 @@ const ready=(async()=>{
   await loadLibrary();
   if(libraryError)$('main')?.insertAdjacentHTML('afterbegin','<p class="form-error">Could not load library/books.json. If you opened this file directly, use a web server instead (for example the VS Code Live Server extension).</p>');
 })();
-
 async function findBookOrReload(id){
   let b=findBook(id);
   if(!b){await loadLibrary(true);b=findBook(id)}
