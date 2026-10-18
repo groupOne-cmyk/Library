@@ -10,19 +10,21 @@ else (async()=>{
   const end=$('#chapter-end'),goCh=n=>location.href=`reader.html?id=${book.id}&ch=${n}`;
   const show=id=>['text-reader','page-reader','strip-reader'].forEach(x=>$('#'+x).hidden=x!==id);
   const saveProgress=p=>{if(u&&ch){u.progress[book.id]={ch:ch.number,page:p};saveUsers()}};
+  
+  const finish=()=>{if(u){delete u.progress[book.id];saveUsers()}location.href=`book-details.html?id=${book.id}`};
   $('#reader-title').textContent=book.title+(chs.length>1?` – Chapter ${ch.number}: ${ch.title}`:'');
   document.title=book.title+' | Online Library';
   const loanDue=u?.due?.[book.id];
   if(loanDue)$('#reader-title').insertAdjacentHTML('afterend',`<span class="loan-timer" data-due="${loanDue}" data-prefix="Return within ">Return within ${fmtLeft(loanDue)}</span>`);
 
-  if(chs.length>1){ 
+  if(chs.length>1){
     $('#chapter-nav').hidden=false;
     $('#chapter-select').innerHTML=chs.map(c=>`<option value="${c.number}"${c===ch?' selected':''}>Chapter ${c.number}: ${esc(c.title)}</option>`).join('');
     $('#chapter-select').onchange=e=>goCh(e.target.value);
-    $('#chapter-prev').disabled=!prev;$('#chapter-next').disabled=!next;
-    $('#chapter-prev').onclick=()=>goCh(prev.number);$('#chapter-next').onclick=()=>goCh(next.number);
-    end.hidden=false;$('#end-prev').disabled=!prev;$('#end-next').disabled=!next;
-    $('#end-prev').onclick=()=>goCh(prev.number);$('#end-next').onclick=()=>goCh(next.number);
+    $('#chapter-prev').disabled=!prev;$('#chapter-prev').onclick=()=>goCh(prev.number);
+    $('#chapter-next').textContent=next?'Next chapter':'Finish';$('#chapter-next').onclick=()=>next?goCh(next.number):finish();
+    end.hidden=false;$('#end-prev').disabled=!prev;$('#end-prev').onclick=()=>goCh(prev.number);
+    $('#end-next').textContent=next?'Next chapter':'Finish';$('#end-next').onclick=()=>next?goCh(next.number):finish();
   }
 
   if(book.type==='text'||!ch){
@@ -42,10 +44,10 @@ else (async()=>{
       const draw=()=>{
         $('#page-image').src=pages[p];$('#page-image').alt=`Page ${p+1}`;
         $('#page-counter').textContent=`Page ${p+1} of ${pages.length}`;
-        $('#page-next').textContent=p===pages.length-1&&next?'Next chapter':'Next';saveProgress(p);
+        $('#page-next').textContent=p===pages.length-1?(next?'Next chapter':'Finish'):'Next';saveProgress(p);
       };
       const step=d=>{
-        if(d>0&&p===pages.length-1){if(next)goCh(next.number);return}
+        if(d>0&&p===pages.length-1){next?goCh(next.number):finish();return}
         p=Math.min(pages.length-1,Math.max(0,p+d));draw();
       };
       $('#page-prev').onclick=()=>step(-1);$('#page-next').onclick=()=>step(1);
