@@ -79,5 +79,26 @@
     "pad": 4
    }
   ]
+ },
+ {
+  "id": 4,
+  "title": "Absolute Batman",
+  "author": "Scott Snyder",
+  "genre": "Drama",
+  "type": "comic",
+  "year": 2024,
+  "copies": 1,
+  "desc": "Absolute Batman is an American monthly superhero comic book series published by DC Comics, featuring an alternate version of the character Batman.",
+  "chapters": [
+   {
+    "number": 1,
+    "title": "Chapter 1",
+    "key": "cmvdd7nsw0",
+    "folder": "library/pages/4/cmvdd7nsw0",
+    "pageCount": 44,
+    "ext": "webp",
+    "pad": 4
+   }
+  ]
  }
 ]
