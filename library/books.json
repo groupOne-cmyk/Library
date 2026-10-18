@@ -31,13 +31,13 @@
  },
  {
   "id": 2,
-  "title": "dwadawd",
-  "author": "21421",
+  "title": "The Metamorphosis",
+  "author": "Franz Kafka",
   "genre": "Historical",
   "type": "text",
-  "year": 21421,
+  "year": 1915,
   "copies": 1,
-  "desc": "dsadsaf",
+  "desc": "When Gregor Samsa woke up from troubled dreams one morning, he found himself transformed into a monstrous vermin in his bed.",
   "chapters": [
    {
     "number": 1,
@@ -50,6 +50,12 @@
     "title": "Chapter 2",
     "key": "tmvax1lwa1",
     "textFile": "library/text/2/tmvax1lwa1.txt"
+   },
+   {
+    "number": 3,
+    "title": "Chapter 3",
+    "key": "tmvdahf6p0",
+    "textFile": "library/text/2/tmvdahf6p0.txt"
    }
   ]
  }
