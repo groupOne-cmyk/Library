@@ -1,7 +1,6 @@
-// Shared code for every page: helpers, saved data, header, book cards, book details buttons
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-// puts an invisible line-break point inside any word longer than 30 characters, so long unbroken text wraps instead of widening the page
+
 const softBreak=s=>String(s??'').replace(/(\S{30})(?=\S)/gu,'$1\u200b');
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
 const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch{toast('Storage is full. Use fewer or smaller images.');return false}};
@@ -9,14 +8,12 @@ function toast(t){const e=$('#toast');if(!e)return;e.textContent=t;e.hidden=fals
 const TYPES={text:'Book',manga:'Manga',manhwa:'Manhwa',comic:'Comic'};
 const PAGE=document.body.dataset.page;
 
-const LOAN_MS=7*24*60*60*1000;   // a loan lasts one week
+const LOAN_MS=7*24*60*60*1000;
 
-// ---- saved data (localStorage)
-// books = library/books.json (saved by the admin page through GitHub) + optional hand-written entries in library/books.js
 let books=[];
 const EXTRA=typeof LIBRARY!=='undefined'?LIBRARY:[];
 let users=load('users',null)||[{username:'admin',password:'admin123',role:'admin',list:[],loans:[],waits:[],progress:{}}];
-users.forEach(u=>{u.progress=u.progress||{};u.due=u.due||{};u.loans.forEach(id=>{if(!u.due[id])u.due[id]=Date.now()+LOAN_MS})});   // due = when each loan must be returned
+users.forEach(u=>{u.progress=u.progress||{};u.due=u.due||{};u.loans.forEach(id=>{if(!u.due[id])u.due[id]=Date.now()+LOAN_MS})});
 const current=load('currentUser',null);
 const saveUsers=()=>save('users',users);
 const me=()=>users.find(u=>u.username===current)||null;
@@ -28,17 +25,17 @@ const hue=s=>[...s].reduce((a,c)=>a+c.charCodeAt(0),0)%360;
 const coverStyle=b=>`linear-gradient(160deg,hsl(${hue(b.title)} 45% 36%),hsl(${(hue(b.title)+40)%360} 50% 22%))`;
 function returnBook(u,id,silent){
   u.loans=u.loans.filter(i=>i!==id);delete u.due[id];
-  const next=users.find(x=>x.waits.includes(id));            // first person waiting gets the copy, with a fresh week
+  const next=users.find(x=>x.waits.includes(id));
   if(next){next.waits=next.waits.filter(i=>i!==id);next.loans.push(id);next.due[id]=Date.now()+LOAN_MS}
   if(!silent)toast('Returned');
 }
-// a book can be read when a copy is free, or when this user has it borrowed
+
 const canRead=(b,u)=>freeCopies(b)>0||!!u?.loans.includes(b.id);
 function fmtLeft(due){
   const s=Math.max(0,Math.floor((due-Date.now())/1000));
   return `${Math.floor(s/86400)}d ${Math.floor(s%86400/3600)}h ${Math.floor(s%3600/60)}m ${s%60}s`;
 }
-// loans that ran out of time are returned automatically
+
 function expireLoans(){
   let n=0;
   users.forEach(u=>u.loans.filter(id=>u.due[id]<=Date.now()).forEach(id=>{returnBook(u,id,true);n++}));
@@ -46,7 +43,6 @@ function expireLoans(){
   return n;
 }
 
-// ---- page guards and header
 if((PAGE==='my-library'&&!me())||(PAGE==='admin'&&me()?.role!=='admin'))location.replace('login.html');
 (function(){
   const u=me(),btn=$('#auth-btn');
@@ -55,7 +51,6 @@ if((PAGE==='my-library'&&!me())||(PAGE==='admin'&&me()?.role!=='admin'))location
   if(u){btn.textContent=`Log out (${u.username})`;btn.onclick=e=>{e.preventDefault();localStorage.removeItem('currentUser');location.href='index.html'}}
 })();
 
-// ---- book cards
 function cardHTML(b){
   const free=freeCopies(b)>0,st=free?'available':'checked-out';
   return `<article class="book-card" data-book-id="${b.id}" data-type="${b.type}" data-status="${st}" tabindex="0">
@@ -71,7 +66,6 @@ function openBook(id){
 document.addEventListener('click',e=>{const c=e.target.closest('.book-card');if(c)openBook(c.dataset.bookId)});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.classList.contains('book-card'))openBook(e.target.dataset.bookId)});
 
-// ---- book details (used by the pop-up and by book-details.html)
 function showDetails(root,b){
   $('.book-details',root).dataset.bookId=b.id;
   const q=s=>$(s,root)||{hidden:false,textContent:'',innerHTML:'',dataset:{},style:{},classList:{add(){},remove(){}},removeAttribute(){},setAttribute(){}},f=k=>q(`[data-field="${k}"]`),u=me(),free=freeCopies(b),chs=chaptersOf(b),prog=u?.progress[b.id];
@@ -85,7 +79,7 @@ function showDetails(root,b){
   rd.textContent=can?(prog?'Continue reading':'Read online'):'Not available to read';
   if(can){rd.href=`reader.html?id=${b.id}`+(prog?`&ch=${prog.ch}`:'');rd.removeAttribute('aria-disabled');rd.classList.remove('is-disabled')}
   else{rd.removeAttribute('href');rd.setAttribute('aria-disabled','true');rd.classList.add('is-disabled')}
-  if(loan){      // live countdown for the borrower, or a notice when every copy is out
+  if(loan){ 
     if(has){loan.hidden=false;loan.dataset.due=u.due[b.id];loan.dataset.prefix='You have ';loan.dataset.suffix=' left to return it.';loan.textContent=`You have ${fmtLeft(u.due[b.id])} left to return it.`}
     else if(!can){loan.hidden=false;delete loan.dataset.due;loan.textContent='All copies are borrowed, so this book cannot be read until one is returned.'}
     else{loan.hidden=true;delete loan.dataset.due}
@@ -113,7 +107,6 @@ function bindDetails(root){
   });
 }
 
-// ---- countdowns: any element with data-due ticks every second; when a loan runs out it is returned and the page reloads
 if(expireLoans()&&!users.find(u=>u.username===current)?.loans.length)toast('A borrowed book was returned because its week ended.');
 setInterval(()=>{
   let over=false;
@@ -121,7 +114,7 @@ setInterval(()=>{
   if(over){expireLoans();location.reload()}
 },1000);
 
-// ---- loading the library
+
 const loadPages=async(b,c)=>pagesOf(c);
 const loadText=async(b,c)=>{
   const f=c?.textFile||b.textFile;
@@ -133,7 +126,7 @@ const loadText=async(b,c)=>{
 };
 const mergeExtra=list=>[...list,...EXTRA.filter(x=>!list.some(b=>b.id===x.id)).map(x=>({...x,fromFile:true}))].sort((a,b)=>a.id-b.id);
 let libraryError=false;
-async function loadLibrary(fresh){      // fresh = ask the server for a new copy instead of using the browser's saved one
+async function loadLibrary(fresh){ 
   try{
     const r=await fetch('library/books.json'+(fresh?'?t='+Date.now():''),{cache:fresh?'reload':'no-cache'});
     if(!r.ok)throw 0;
@@ -144,7 +137,7 @@ const ready=(async()=>{
   await loadLibrary();
   if(libraryError)$('main')?.insertAdjacentHTML('afterbegin','<p class="form-error">Could not load library/books.json. If you opened this file directly, use a web server instead (for example the VS Code Live Server extension).</p>');
 })();
-// finds a book; if it is missing, loads a fresh copy of the list once and looks again
+
 async function findBookOrReload(id){
   let b=findBook(id);
   if(!b){await loadLibrary(true);b=findBook(id)}
