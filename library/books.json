@@ -58,5 +58,26 @@
     "textFile": "library/text/2/tmvdarve12.txt"
    }
   ]
+ },
+ {
+  "id": 3,
+  "title": "Solo Leveling",
+  "author": "Chugong",
+  "genre": "Action",
+  "type": "manhwa",
+  "year": 2016,
+  "copies": 1,
+  "desc": "Follows the adventures of Sung Jinwoo in a world that is constantly threatened by monsters and evil forces. In his battles Sung transforms himself from the weakest hunter of all mankind to one of the strongest hunters in existence.",
+  "chapters": [
+   {
+    "number": 1,
+    "title": "Chapter 1",
+    "key": "cmvdcoudc0",
+    "folder": "library/pages/3/cmvdcoudc0",
+    "pageCount": 49,
+    "ext": "webp",
+    "pad": 4
+   }
+  ]
  }
 ]
