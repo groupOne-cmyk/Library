@@ -148,5 +148,35 @@
     "pad": 4
    }
   ]
+ },
+ {
+  "id": 7,
+  "title": "Dragon Ball Super",
+  "author": "Akira Toriyama",
+  "genre": "Shonen",
+  "type": "manga",
+  "year": 2015,
+  "copies": 3,
+  "desc": "Dragon Ball Super follows the adventures of Son Goku and his friends during the ten-year timeskip after the defeat of Majin Buu in Dragon Ball Z",
+  "chapters": [
+   {
+    "number": 1,
+    "title": "God of Destruction's Premonition",
+    "key": "cmvq0elx30",
+    "folder": "library/pages/7/cmvq0elx30",
+    "pageCount": 22,
+    "ext": "webp",
+    "pad": 4
+   },
+   {
+    "number": 2,
+    "title": "Goku's Defeat",
+    "key": "cmvq0ema51",
+    "folder": "library/pages/7/cmvq0ema51",
+    "pageCount": 16,
+    "ext": "webp",
+    "pad": 4
+   }
+  ]
  }
 ]
