@@ -259,5 +259,26 @@
     "pad": 4
    }
   ]
+ },
+ {
+  "id": 11,
+  "title": "Demon Slayer",
+  "author": "Koyoharu Gotouge",
+  "genre": "Adventure",
+  "type": "manga",
+  "year": 2016,
+  "copies": 1,
+  "desc": "follows teenage Tanjiro Kamado, who joins the Demon Slayer Corps after his family is slaughtered and the sole survivor, his younger sister Nezuko, is turned into a demon, in the hopes of turning her human again.",
+  "chapters": [
+   {
+    "number": 1,
+    "title": "Cruelty",
+    "key": "cmvqi4sci0",
+    "folder": "library/pages/11/cmvqi4sci0",
+    "pageCount": 60,
+    "ext": "webp",
+    "pad": 4
+   }
+  ]
  }
 ]
