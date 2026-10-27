@@ -118,5 +118,35 @@
     "textFile": "library/text/5/tmvffy1o10.txt"
    }
   ]
+ },
+ {
+  "id": 6,
+  "title": "Slam Dunk!",
+  "author": "Takehiko Inoue",
+  "genre": "Sports",
+  "type": "manga",
+  "year": 1990,
+  "copies": 2,
+  "desc": "The story follows Hanamichi Sakuragi, a brash and impulsive high school student who joins a basketball team at Shohoku High School, located in the Shōnan area of Japan.",
+  "chapters": [
+   {
+    "number": 1,
+    "title": "Sakuragi-kun",
+    "key": "cmvpzo0vx0",
+    "folder": "library/pages/6/cmvpzo0vx0",
+    "pageCount": 33,
+    "ext": "webp",
+    "pad": 4
+   },
+   {
+    "number": 2,
+    "title": "Kaede Rukawa",
+    "key": "cmvpzo48g1",
+    "folder": "library/pages/6/cmvpzo48g1",
+    "pageCount": 22,
+    "ext": "webp",
+    "pad": 4
+   }
+  ]
  }
 ]
