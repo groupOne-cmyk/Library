@@ -238,5 +238,26 @@
     "pad": 4
    }
   ]
+ },
+ {
+  "id": 10,
+  "title": "Bleach",
+  "author": "Tite Kubo",
+  "genre": "Shonen",
+  "type": "manga",
+  "year": 2001,
+  "copies": 1,
+  "desc": "It follows teenager Ichigo Kurosaki, who obtains the powers of a Soul Reaper—a death personification similar to a Grim Reaper—from another Soul Reaper, Rukia Kuchiki",
+  "chapters": [
+   {
+    "number": 1,
+    "title": "Bleach",
+    "key": "cmvqi22to0",
+    "folder": "library/pages/10/cmvqi22to0",
+    "pageCount": 46,
+    "ext": "webp",
+    "pad": 4
+   }
+  ]
  }
 ]
