@@ -178,5 +178,44 @@
     "pad": 4
    }
   ]
+ },
+ {
+  "id": 8,
+  "title": "Dragon Ball",
+  "author": "Akira Toriyama",
+  "genre": "Shonen",
+  "type": "manga",
+  "year": 1984,
+  "copies": 3,
+  "desc": "Dragon Ball follows the childhood adventures of Son Goku, a naive, monkey-tailed boy living alone in the mountains who is inspired by the classical Chinese novel Journey to the West",
+  "chapters": [
+   {
+    "number": 1,
+    "title": "Bulma and Son Goku",
+    "key": "cmvq0w2n10",
+    "folder": "library/pages/8/cmvq0w2n10",
+    "pageCount": 36,
+    "ext": "webp",
+    "pad": 4
+   },
+   {
+    "number": 2,
+    "title": "No Balls!",
+    "key": "cmvq0w3wb1",
+    "folder": "library/pages/8/cmvq0w3wb1",
+    "pageCount": 12,
+    "ext": "webp",
+    "pad": 4
+   },
+   {
+    "number": 3,
+    "title": "Goku – Running to the Sea",
+    "key": "cmvq0w3wd2",
+    "folder": "library/pages/8/cmvq0w3wd2",
+    "pageCount": 14,
+    "ext": "webp",
+    "pad": 4
+   }
+  ]
  }
 ]
